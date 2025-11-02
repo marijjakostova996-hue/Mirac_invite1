@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Miraç 1 Yaşında!</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: #0b1d3f;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffd700;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+  }
+  h1 { font-size: 3em; margin: 0.2em 0; }
+  p { font-size: 1.5em; margin: 0.2em 0; }
+
+  .star, .planet, .rocket {
+    position: absolute;
+    border-radius: 50%;
+  }
+  .planet {
+    background: radial-gradient(circle at 30% 30%, #ffcc66, #993366);
+  }
+  .rocket {
+    width: 15px;
+    height: 30px;
+    background: linear-gradient(45deg, #ffd700, #fff);
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+
+<h1>🚀 Miraç 1 Yaşında! 🌙</h1>
+<p>22 Kasım saat 19:00’da St. Boss’ta bize katıl!<br>Küçük astronotumuzla uzayda eğlenceye hazır olun! 🪐✨</p>
+
+<script>
+  // Stars
+  const stars = [];
+  for(let i=0;i<60;i++){
+    const star=document.createElement('div');
+    star.className='star';
+    const size=1+Math.random()*2;
+    star.style.width=size+'px';
+    star.style.height=size+'px';
+    star.style.top=Math.random()*window.innerHeight+'px';
+    star.style.left=Math.random()*window.innerWidth+'px';
+    star.speedX=0.05+Math.random()*0.15;
+    star.speedY=0.02+Math.random()*0.1;
+    document.body.appendChild(star);
+    stars.push(star);
+  }
+
+  // Planets
+  const planets=[];
+  for(let i=0;i<3;i++){
+    const planet=document.createElement('div');
+    planet.className='planet';
+    const size=30+Math.random()*40;
+    planet.style.width=size+'px';
+    planet.style.height=size+'px';
+    planet.style.top=Math.random()*(window.innerHeight-size)+'px';
+    planet.style.left=Math.random()*(window.innerWidth-size)+'px';
+    planet.angle=Math.random()*360;
+    planet.rotationSpeed=0.05+Math.random()*0.1;
+    document.body.appendChild(planet);
+    planets.push(planet);
+  }
+
+  // Rockets
+  const rockets=[];
+  for(let i=0;i<2;i++){
+    const rocket=document.createElement('div');
+    rocket.className='rocket';
+    rocket.style.top=Math.random()*window.innerHeight+'px';
+    rocket.style.left=Math.random()*window.innerWidth+'px';
+    rocket.speedX=0.3+Math.random()*0.3;
+    rocket.speedY=0.1+Math.random()*0.1;
+    document.body.appendChild(rocket);
+    rockets.push(rocket);
+  }
+
+  function animate(){
+    // Stars
+    stars.forEach(star=>{
+      let top=parseFloat(star.style.top);
+      let left=parseFloat(star.style.left);
+      top+=star.speedY;
+      left+=star.speedX;
+      if(top>window.innerHeight) top=0;
+      if(left>window.innerWidth) left=0;
+      star.style.top=top+'px';
+      star.style.left=left+'px';
+    });
+
+    // Planets rotation
+    planets.forEach(planet=>{
+      planet.angle+=planet.rotationSpeed;
+      planet.style.transform=rotate(${planet.angle}deg);
+    });
+
+    // Rockets movement
+    rockets.forEach(rocket=>{
+      let top=parseFloat(rocket.style.top);
+      let left=parseFloat(rocket.style.left);
+      top-=rocket.speedY;
+      left+=rocket.speedX;
+      if(top<-50) top=window.innerHeight+50;
+      if(left>window.innerWidth+50) left=-50;
+      rocket.style.top=top+'px';
+      rocket.style.left=left+'px';
+    });
+
+    requestAnimationFrame(animate);
+  }
+  animate();
+</script>
+
+<!-- Music placeholder -->
+<audio id="bgMusic" autoplay loop>
+  <source src="mirac.mp3" type="audio/mpeg">
+  <!-- Replace 'mirac.mp3' with your own file -->
+</audio>
+
+</body>
+</html>
